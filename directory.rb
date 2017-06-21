@@ -35,9 +35,11 @@ end
 
 
 def print(students)
-  students.each_with_index do |student, index|
-  puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
-  end   
+ i = 0 
+  until i >= students.length
+   puts "#{i + 1}. #{students[i][:name]} (#{students[i][:cohort]} cohort)"
+  i += 1 
+  end  
 end 
 
 def print_footer(students)
