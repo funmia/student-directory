@@ -5,18 +5,18 @@ def input_students
   students = []
   # get the first name
   puts "Enter a name"
-  name = gets.chomp 
+  name = gets.delete("\n")
   
   # while the name is not empty, repeat this code 
   while !name.empty? do 
     puts "Enter student's country"
-    country = gets.chomp 
+    country = gets.delete("\n")
   
     puts "Enter the student's course"
-    course = gets.chomp 
+    course = gets.delete("\n")
     
     puts "Enter the student's cohort"
-    cohort = gets.chomp.to_sym
+    cohort = gets.delete("\n").to_sym
     
     if cohort.empty? 
       cohort= :not_decided
@@ -33,7 +33,7 @@ def input_students
     
     # get another name from the user 
     puts "Enter a name"
-    name = gets.chomp 
+    name = gets.delete("\n")
   end 
   # return the array of students 
   students
