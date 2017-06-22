@@ -31,19 +31,8 @@ def input_students
     name = gets.chomp 
   end 
   # return the array of students 
-  students 
+  students
 end 
-
-def sort_students(students)
-  sorted_students = []
-  students.each do |student|
-    first_letter = student[:name][0].downcase
-    if first_letter == "c" && student[:name].length < 12
-      sorted_students << student
-    end
-  end
-  return sorted_students
-end
 
 # Aligns the text to the center 
 def center_align(text)
@@ -57,11 +46,10 @@ def print_header
 end 
 
 def print(students)
- i = 0 
-  until i >= students.length
-   center_align("#{i + 1}. #{students[i][:name]} #{students[i][:country]} #{students[i][:course]} (cohort: #{students[i][:cohort]})")
-  i += 1 
-  end  
+  students.sort_by! {|student| student[:cohort]}
+  students.each_with_index do |student, i|
+    center_align("#{i + 1}. #{students[i][:name]} #{students[i][:country]} #{students[i][:course]} (cohort: #{students[i][:cohort]})")
+  end 
 end 
 
 def print_footer(students)
@@ -69,8 +57,6 @@ def print_footer(students)
 end 
 
 students = input_students
-#students = sort_students(students)  if you want print out the sorted list.
-#nothing happens until we call the methods
 
 print_header()
 print(students)
