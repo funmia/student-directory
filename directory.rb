@@ -38,27 +38,34 @@ def sort_students(students)
   return sorted_students
 end
 
+# Aligns the text to the center 
+def center_align(text)
+  width = 200
+  puts text.center(width)
+end 
+
 def print_header 
-  puts "The students of Villians Academy"
-  puts "-------------"
+  center_align("The students of Villians Academy")
+  center_align( "-------------")
 end 
 
 def print(students)
  i = 0 
   until i >= students.length
-   puts "#{i + 1}. #{students[i][:name]} #{students[i][:country]} #{students[i][:age]} (#{students[i][:cohort]} cohort)"
+   center_align("#{i + 1}. #{students[i][:name]} #{students[i][:country]} #{students[i][:age]} (#{students[i][:cohort]} cohort)")
   i += 1 
   end  
 end 
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  center_align("Overall, we have #{students.count} great students")
 end 
 
 students = input_students
 #students = sort_students(students)  if you want print out the sorted list.
 #nothing happens until we call the methods
 
-print_header
+print_header()
 print(students)
 print_footer(students)
+
