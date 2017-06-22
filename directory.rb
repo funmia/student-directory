@@ -24,7 +24,12 @@ def input_students
     
     # add the student hash to the array
     students << {name: name, country: country, course: course, cohort: cohort}
-    puts "Now we have #{students.count}"
+    
+    if students.size > 1 
+     puts "Now we have #{students.count} students"
+    else 
+      puts "Now we have #{students.count} student"
+    end
     
     # get another name from the user 
     puts "Enter a name"
