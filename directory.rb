@@ -12,11 +12,18 @@ def input_students
     puts "Enter student's country"
     country = gets.chomp 
   
-    puts "Enter the student's age"
-    age = gets.chomp 
+    puts "Enter the student's course"
+    course = gets.chomp 
+    
+    puts "Enter the student's cohort"
+    cohort = gets.chomp.to_sym
+    
+    if cohort.empty? 
+      cohort= :not_decided
+    end 
     
     # add the student hash to the array
-    students << {name: name, country: country, age: age, cohort: :november}
+    students << {name: name, country: country, course: course, cohort: cohort}
     puts "Now we have #{students.count}"
     
     # get another name from the user 
@@ -52,7 +59,7 @@ end
 def print(students)
  i = 0 
   until i >= students.length
-   center_align("#{i + 1}. #{students[i][:name]} #{students[i][:country]} #{students[i][:age]} (#{students[i][:cohort]} cohort)")
+   center_align("#{i + 1}. #{students[i][:name]} #{students[i][:country]} #{students[i][:course]} (cohort: #{students[i][:cohort]})")
   i += 1 
   end  
 end 
