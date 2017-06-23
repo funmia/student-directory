@@ -2,6 +2,27 @@ COHORT_LIST =[:january,:february,:march,:april,:may,:june,:july,:august,:septemb
 
 @students = [] #an empty array accessible to all methods
 
+def save_students
+  #open the file for writing 
+  file = File.open("students.csv", "w")
+  # iterate over the array of students 
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end 
+  file.close 
+end 
+
+def load_students 
+  file = File.open("students.csv", "r")
+  file.readlines.each do |line|
+  name, cohort = line.chomp.split(",")
+    @students << {name: name, cohort: cohort.to_sym}
+  end 
+  file.close 
+end 
+
 def interactive_menu
   loop do
     # print the menu of options
@@ -23,6 +44,8 @@ def process(selection)
       show_students()
     when "3"
       save_students()
+    when "4"
+      load_students()
     when "9"
       #this will cause the program to terminate
       exit
@@ -36,7 +59,8 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
-  puts "9. Exit" # 9 because we'll be adding more items
+  puts "4. Load the list from students.csv"
+  puts "9. Exit"       # 9 because we'll be adding more items
 end
 
 def show_students
@@ -44,18 +68,6 @@ def show_students
   print_students_list()
   print_footer()
 end
-
-def save_students
-  #open the file for writing 
-  file = File.open("students.csv", "w")
-  # iterate over the array of students 
-  @students.each do |student|
-    student_data = [student[:name], student[:country], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
-  end 
-  file.close 
-end 
 
 # Aligns the text to the center
 def center_align(text)
@@ -92,7 +104,7 @@ def print_students_list
   end
   @students = @students.sort_by {|student| COHORT_LIST.index(student[:cohort])}
   @students.each_with_index do |student, i|
-    center_align("#{i + 1}. #{@students[i][:name]} #{@students[i][:country]} (cohort: #{@students[i][:cohort]})")
+    center_align("#{i + 1}. #{@students[i][:name]} (cohort: #{@students[i][:cohort]})")
   end
 end
 
@@ -110,9 +122,6 @@ def input_students
 
   # while the name is not empty, repeat this code
   while !name.empty? do
-    puts "Enter student's country"
-    country = gets.delete("\n")
-
     puts "Enter the student's cohort"
     cohort = gets.delete("\n").to_sym
 
@@ -121,7 +130,7 @@ def input_students
     end
 
     # add the student hash to the array
-    @students << {name: name, country: country, cohort: cohort}
+    @students << {name: name, cohort: cohort}
 
     if @students.size > 1
      puts "Now we have #{@students.count} students"
@@ -135,5 +144,4 @@ def input_students
 end
 
 interactive_menu()
-
 
