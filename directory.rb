@@ -1,3 +1,5 @@
+COHORT_LIST =[:january,:february,:march,:april,:may,:june,:july,:august,:september,:october,:november,:december]
+
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
@@ -51,12 +53,16 @@ def print_header
 end 
 
 def print(students)
-  students.sort_by! {|student| student[:cohort]}
+  if students.empty?
+    center_align("Please enter at least one student.")
+    puts
+  end 
+  students = students.sort_by {|student| COHORT_LIST.index(student[:cohort])}
   students.each_with_index do |student, i|
     center_align("#{i + 1}. #{students[i][:name]} #{students[i][:country]} #{students[i][:course]} (cohort: #{students[i][:cohort]})")
   end 
 end 
-
+ 
 def print_footer(students)
   center_align("Overall, we have #{students.count} great students")
 end 
