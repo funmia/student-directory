@@ -1,3 +1,4 @@
+#"Exercise 14.4 implements feedback messages for the user"
 COHORT_LIST =[:january,:february,:march,:april,:may,:june,:july,:august,:september,:october,:november,:december]
 
 @students = [] #an empty array accessible to all methods
@@ -26,23 +27,23 @@ def process(selection)
   case selection
     when "1"
       puts "Please follow the instructions below............."
-      puts 
+      puts
      input_students()
     when "2"
-      center_align("Now showing all students in the directory.............") 
-      puts 
+      center_align("Now showing all students in the directory.............")
+      puts
       show_students()
     when "3"
-      center_align("Successfully saved all student data.............") 
-      puts 
+      center_align("Successfully saved all student data.............")
+      puts
       save_students()
     when "4"
-      center_align("Successfully loaded all student data.............") 
-      puts 
+      center_align("Successfully loaded all student data.............")
+      puts
       load_students()
     when "9"
-      center_align("Thank you, Bye..............") 
-      puts 
+      center_align("Thank you, Bye..............")
+      puts
       exit
     else
       puts "I don't know what you meant, try again"
@@ -51,7 +52,7 @@ end
 
 def add_to_students_array(name, cohort)
    @students << {name: name, cohort: cohort.to_sym}
-end 
+end
 
 def input_students
   puts "Please enter the names of the students"
@@ -98,7 +99,7 @@ end
 def print_header
   center_align("The students of Villians Academy")
   center_align( "-------------")
-  puts 
+  puts
 end
 
 def print_students_list
@@ -118,38 +119,36 @@ def print_footer
 end
 
 def save_students
-  #open the file for writing 
-  file = File.open("students.csv", "w")
-  # iterate over the array of students 
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
-  end 
-  file.close 
+  File.open("students.csv", "w") do |file|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end 
+  end
 end 
 
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-  name, cohort = line.chomp.split(",")
-    add_to_students_array(name, cohort)
+  File.open(filename, "r") do |file|
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(",")
+      add_to_students_array(name, cohort)
+    end 
   end 
-  file.close 
-end 
+end
 
 def try_load_students
-  filename = ARGV.first  # first argument from the command line  
-  if filename.nil?   # if no file is given 
+  filename = ARGV.first  # first argument from the command line
+  if filename.nil?   # if no file is given
     load_students()
- elsif File.exists?(filename)  # if it exists 
+ elsif File.exists?(filename)  # if it exists
     load_students(filename)
      puts "Loaded #{@students.count} from #{filename}"
-  else  # if it doesn't exist 
+  else  # if it doesn't exist
     puts "Sorry, #{filename} doesn't exist."
-    exit  # quit the program 
-  end 
-end 
+    exit  # quit the program
+  end
+end
 
 try_load_students()
 interactive_menu()
