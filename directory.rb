@@ -25,17 +25,24 @@ end
 def process(selection)
   case selection
     when "1"
-     #input the students
+      puts "Please follow the instructions below............."
+      puts 
      input_students()
     when "2"
-      # show the students
+      center_align("Now showing all students in the directory.............") 
+      puts 
       show_students()
     when "3"
+      center_align("Successfully saved all student data.............") 
+      puts 
       save_students()
     when "4"
+      center_align("Successfully loaded all student data.............") 
+      puts 
       load_students()
     when "9"
-      #this will cause the program to terminate
+      center_align("Thank you, Bye..............") 
+      puts 
       exit
     else
       puts "I don't know what you meant, try again"
@@ -91,6 +98,7 @@ end
 def print_header
   center_align("The students of Villians Academy")
   center_align( "-------------")
+  puts 
 end
 
 def print_students_list
