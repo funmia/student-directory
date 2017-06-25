@@ -1,4 +1,5 @@
-#"Exercise 14.4 implements feedback messages for the user"
+require 'csv'
+
 COHORT_LIST =[:january,:february,:march,:april,:may,:june,:july,:august,:september,:october,:november,:december]
 
 @students = [] #an empty array accessible to all methods
@@ -119,22 +120,18 @@ def print_footer
 end
 
 def save_students
-  File.open("students.csv", "w") do |file|
+  CSV.open("students.csv", "w") do |csv|
     @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
-    end 
-  end
-end 
+       csv << [student[:name], student[:cohort]]
+     end
+   end
+ end
 
-def load_students(filename = "students.csv")
-  File.open(filename, "r") do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(",")
-      add_to_students_array(name, cohort)
-    end 
-  end 
+def load_students
+  CSV.foreach("students.csv") do |row|
+    name, cohort = row
+    @students << {name: name, cohort: cohort.to_sym}
+  end
 end
 
 def try_load_students
