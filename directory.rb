@@ -8,7 +8,7 @@ def print_menu
  # print the menu and ask the user what to do
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
+  puts "3. Save the list to a file"
   puts "4. Load the list from students.csv"
   puts "9. Exit"       # 9 because we'll be adding more items
 end
@@ -35,8 +35,6 @@ def process(selection)
       puts
       show_students()
     when "3"
-      center_align("Successfully saved all student data.............")
-      puts
       save_students()
     when "4"
       center_align("Successfully loaded all student data.............")
@@ -119,15 +117,26 @@ def print_footer
   puts
 end
 
+def get_file_name
+  puts "Please input the name of your file with a .csv extension or hit enter to save as students.csv"
+  @file_name = STDIN.gets.chomp 
+  if @file_name.empty? 
+   @file_name = "students.csv"
+  end 
+  @file_name
+end
+
 def save_students
-  CSV.open("students.csv", "w") do |csv|
+  get_file_name()
+  CSV.open(@file_name, "w") do |csv|
     @students.each do |student|
        csv << [student[:name], student[:cohort]]
      end
    end
+   puts "Your file as been saved as #{@file_name}"
  end
 
-def load_students
+def load_students(file_name = "students.csv")
   CSV.foreach("students.csv") do |row|
     name, cohort = row
     @students << {name: name, cohort: cohort.to_sym}
